@@ -1,0 +1,35 @@
+meta {
+  name: Create Object 2
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://api.restful-api.dev/objects
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Test2",
+    "data": {
+      "mail": "{{EMail}}",
+      "color": "{{EMailColor}}"
+    }
+  }
+}
+
+assert {
+  res.body.data.mail: eq {{EMail}}
+}
+
+script:pre-request {
+  const { faker } = require('@faker-js/faker');
+  const uniqolor = require('uniqolor');
+  const _email = faker.internet.email();
+  bru.setVar("EMail", _email);
+  const _emailColor = uniqolor(_email);
+  bru.setVar("EMailColor", _emailColor.color);
+  
+}

@@ -1,0 +1,37 @@
+meta {
+  name: Create Object
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://api.restful-api.dev/objects
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "{{ObjectName}}",
+    "data": {
+      "secret": "{{SecretValue}}"
+    }
+  }
+}
+
+vars:pre-request {
+  ObjectName: My Object Name
+}
+
+script:pre-request {
+  // Add new header getting data from a secret .env
+  const _secret = bru.getProcessEnv("MySecretValue");
+  req.setHeader("X-Secret", _secret);
+  bru.setVar("SecretValue", _secret);
+  
+  const { faker } = require('@faker-js/faker');
+  const uniqolor = require('uniqolor');
+  const _email = faker.internet.email();
+  const _emailColor = uniqolor(_email);
+  
+}
