@@ -23,6 +23,10 @@ vars:pre-request {
   ObjectName: My Object Name
 }
 
+assert {
+  res.body.data.secret: eq {{SecretValue}}
+}
+
 script:pre-request {
   // Add new header getting data from a secret .env
   const _secret = bru.getProcessEnv("MySecretValue");

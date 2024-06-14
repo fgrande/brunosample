@@ -1,0 +1,15 @@
+meta {
+  name: Status303
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://postman-echo.com/status/303
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 303
+}
