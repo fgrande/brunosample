@@ -1,10 +1,12 @@
 {
-    "name": "my-bruno-collection",
+    "name": "brunosample",
     "version": "1.0.0",
     "main": "index.js",
     "dependencies": {
-        "uniqolor": "1.1.1",
-        "table": "6.8.2",
-        "@faker-js/faker": "8.3.1"
+        "@faker-js/faker": "^8.4.1",
+        "table": "^6.8.2",
+        "uniqolor": "^1.1.1",
+        "xmldom": "^0.6.0",
+        "xpath": "^0.0.34"
     }
 }

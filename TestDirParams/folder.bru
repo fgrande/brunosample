@@ -1,0 +1,9 @@
+meta {
+  name: TestDir
+}
+
+tests {
+  test("[TestDir] Response Status is OK (200)", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

@@ -1,0 +1,9 @@
+meta {
+  name: TestDirNoParams
+}
+
+tests {
+  test("[TestDirNoParams] Response Status is OK (200)", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

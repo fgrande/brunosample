@@ -1,0 +1,30 @@
+meta {
+  name: Artist Finder
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://musicbrainz.org/ws/2/artist?query=Green&limit=5
+  body: none
+  auth: none
+}
+
+params:query {
+  query: Green
+  limit: 5
+}
+
+assert {
+  res.body.artists: length 5
+}
+
+docs {
+  # MusicBrainz Artist Finder
+  To find artist data use this entrypoint. Main parameters are:
+  
+  * **query** : part of the artist's name
+  * **limit** : max number of results
+  
+  
+}

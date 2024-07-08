@@ -1,0 +1,77 @@
+meta {
+  name: XML Tests
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://musicbrainz.org/ws/2/artist/:artistId?fmt=xml
+  body: none
+  auth: none
+}
+
+params:query {
+  fmt: xml
+}
+
+params:path {
+  artistId: 084308bd-1654-436f-ba03-df6697104e19
+}
+
+assert {
+  res.body: startsWith <?xml
+  res.body: contains <metadata
+  res.body: contains </metadata>
+  res.body: contains <name>Green Day</name>
+}
+
+script:post-response {
+  /*
+  const xpath = require('xpath');
+  const dom = require('xmldom').DOMParser;
+  
+  const doc = new dom().parseFromString(res.body, 'text/xml');
+  //const query = "//*[local-name()='AuthToken']/text()";
+  const query = "//*[local-name()='artist']/*[local-name()='name']/text()";
+  const token = xpath.select(query, doc);
+  console.log("Token: " + token)
+  token.forEach( (n, i) => {
+    console.log(n.textContent);
+  });
+  */
+}
+
+tests {
+  const xpath = require('xpath');
+  const dom = require('xmldom').DOMParser;
+  const doc = new dom().parseFromString(res.body, 'text/xml');
+  
+  test("Expect Name is Green Day", function() {
+    const _query = "//*[local-name()='artist']/*[local-name()='name']/text()";
+    const _name = xpath.select(_query, doc);
+    expect(_name.toString()).to.equal("Green Day");
+  });
+  
+  test("Expect Begin is 1989", function() {
+    const _query = "//*[local-name()='artist']/*[local-name()='life-span']/*[local-name()='begin']/text()";
+    const _begin = xpath.select(_query, doc);
+    expect(_begin.toString()).to.equal("1989");
+  });
+  
+  test("Expect every isni starts with 0 and ends with 2", function() {
+    const _query = "//*[local-name()='artist']/*[local-name()='isni-list']/*[local-name()='isni']/text()";
+    const _isni = xpath.select(_query, doc);
+    _isni.forEach( (n, i) => {
+      expect(n.textContent).to.satisfy(function(item) {
+        return item.startsWith("0") && item.endsWith("2");
+      });
+    });
+  });
+  
+  test("Expect isni has 1 element", function() {
+    const _query = "count(//*[local-name()='artist']/*[local-name()='isni-list']/*[local-name()='isni'])";
+    const _isniCounter = xpath.select(_query, doc);
+    expect(_isniCounter).to.equal(1);
+  });
+  
+}

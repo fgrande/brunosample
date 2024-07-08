@@ -1,0 +1,30 @@
+meta {
+  name: TestParams
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://musicbrainz.org/ws/2/artist/:artistId?fmt=json
+  body: none
+  auth: none
+}
+
+params:query {
+  fmt: json
+}
+
+params:path {
+  artistId: 084308bd-1654-436f-ba03-df6697104e19
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("Response Status should be 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+}

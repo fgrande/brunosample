@@ -1,0 +1,59 @@
+meta {
+  name: JSON Tests
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://musicbrainz.org/ws/2/artist/:artistId?fmt=json
+  body: none
+  auth: none
+}
+
+params:query {
+  fmt: json
+}
+
+params:path {
+  artistId: 084308bd-1654-436f-ba03-df6697104e19
+}
+
+tests {
+  // Extract body from response
+  const _payload = res.getBody();
+  // Extract Response Status
+  const _status = res.getStatus();
+  
+  // Response Status
+  test("[Using Expect] Response Status should be 200", function() {
+    expect(_status).to.equal(200);
+  });
+  
+  test("[Using Assert] Response Status should be 200", function() {
+    assert.equal(_status, 200);
+  });
+  
+  // Response Time
+  test("[Using Expect] Response Time should be between 30 and 500", function() {
+    expect(_status).to.be.gte(30).and.lte(500);
+  });
+  
+  // Start of career
+  test("[Using Expect] Career should start in 1989", function() {
+    expect(_payload['life-span'].begin).to.equal("1989");
+  });
+  
+  test("[Using Assert] Career should start in 1989", function() {
+    assert.equal(_payload['life-span'].begin, "1989");
+  });
+  
+  // Check Items
+  test("[Using Expect] All Items in isnis should start with 0 and end with 2", function() {
+    expect(_payload.isnis).to.satisfy(function (items){
+      return items.every(function(item){
+        return item.startsWith("0") && item.endsWith("2");
+      })
+    })
+  });
+  
+}

@@ -3,6 +3,8 @@ Bruno is an Opensource API Client aimed at revolutionizing the status quo repres
 
 This is a simple Bruno collection to demonstrate its functionalities, helping You understand how it works.
 
+Don't forget to run ```npm install```to download packages
+
 ## How to test it
 Copy the file *.env.sample* to *.env* and put a value in **MySecretValue** tag, to test it.
 

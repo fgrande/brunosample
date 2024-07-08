@@ -1,0 +1,9 @@
+meta {
+  name: MusicBrainz
+}
+
+tests {
+  test("[MusicBrainz] Response Status is OK (200)", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

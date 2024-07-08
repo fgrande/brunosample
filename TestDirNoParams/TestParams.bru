@@ -1,0 +1,27 @@
+meta {
+  name: TestParams
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://musicbrainz.org/ws/2/artist?query=Green&limit=5
+  body: none
+  auth: none
+}
+
+params:query {
+  query: Green
+  limit: 5
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("Response Status should be 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+}
